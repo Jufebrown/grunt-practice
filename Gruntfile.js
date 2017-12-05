@@ -1,5 +1,8 @@
 module.exports = function (grunt) {
   grunt.initConfig({
+    browserify: {
+      'dist/bundle.js': ['javascripts/main.js']
+    },
     jshint: {
       files: ['javascripts/**/*.js'],
       options: {
@@ -20,18 +23,18 @@ module.exports = function (grunt) {
     watch: {
       javascripts: {
         files: ['javascripts/**/*.js'],
-        tasks: ['jshint']
+        tasks: ['jshint', 'browserify']
       },
       sass: {
         files: ['sass/**/*.scss'],
         tasks: ['sass']
       }
     }
-  })
+  });
 
   require('matchdep')
     .filter('grunt-*')
-    .forEach(grunt.loadNpmTasks)
+    .forEach(grunt.loadNpmTasks);
 
-  grunt.registerTask('default', ['jshint', 'sass', 'watch'])
-}
+  grunt.registerTask('default', ['jshint', 'sass', 'browserify', 'watch']);
+};
